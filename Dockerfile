@@ -14,7 +14,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 5.0.0
+ENV NODE_VERSION 5.1.0
 ENV NODE_ARCH armv7l
 
 # Install curl
