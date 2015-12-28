@@ -17,8 +17,9 @@ ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 5.3.0
 ENV NODE_ARCH armv7l
 
-# Install curl
-RUN apt-get update && apt-get install -y curl \
+# Install ca-certificates and curl
+RUN apt-get update && apt-get install -y ca-certificates curl \
+  && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js
