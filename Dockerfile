@@ -16,7 +16,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 4.2.5
+ENV NODE_VERSION 4.2.6
 ENV NODE_ARCH armv7l
 
 # Install ca-certificates and curl
