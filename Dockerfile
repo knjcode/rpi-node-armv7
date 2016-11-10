@@ -1,5 +1,7 @@
 FROM resin/rpi-raspbian:jessie
 
+RUN groupadd -r node && useradd -r -g node node
+
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
   && for key in \
@@ -16,7 +18,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 4.6.1
+ENV NODE_VERSION 4.6.2
 ENV NODE_ARCH armv7l
 
 RUN buildDeps='ca-certificates curl xz-utils' \
