@@ -1,5 +1,8 @@
 FROM resin/rpi-raspbian:jessie
 
+RUN groupadd --gid 1000 node \
+  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
+
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
   && for key in \
