@@ -24,15 +24,31 @@ ENV NODE_VERSION 6.10.0
 ENV NODE_ARCH armv7l
 
 RUN buildDeps='ca-certificates curl xz-utils' \
-    && set -x \
-    && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
-    && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz" \
-    && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
-    && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
-    && grep " node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
-    && tar -xJf "node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz" -C /usr/local --strip-components=1 \
-    && rm "node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
-    && apt-get purge -y --auto-remove $buildDeps
+  && set -x \
+  && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
+  && rm -rf /var/lib/apt/lists/* \
+  && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz" \
+  && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
+  && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
+  && grep " node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
+  && tar -xJf "node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz" -C /usr/local --strip-components=1 \
+  && rm "node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
+  && apt-get purge -y --auto-remove $buildDeps \
+  && ln -s /usr/local/bin/node /usr/local/bin/nodejs
+
+ENV YARN_VERSION 0.22.0
+
+RUN set -ex \
+  && for key in \
+    6A010C5166006599AA17F08146C2130DFD2497F5 \
+  ; do \
+    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
+  done \
+  && curl -fSL -o yarn.js "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-legacy-$YARN_VERSION.js" \
+  && curl -fSL -o yarn.js.asc "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-legacy-$YARN_VERSION.js.asc" \
+  && gpg --batch --verify yarn.js.asc yarn.js \
+  && rm yarn.js.asc \
+  && mv yarn.js /usr/local/bin/yarn \
+  && chmod +x /usr/local/bin/yarn
 
 CMD [ "node" ]
