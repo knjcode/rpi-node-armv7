@@ -20,12 +20,14 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 6.10.0
+ENV NODE_VERSION 6.10.1
 ENV NODE_ARCH armv7l
 
-RUN buildDeps='ca-certificates curl xz-utils' \
+RUN buildDeps='xz-utils' \
   && set -x \
   && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
+    ca-certificates \
+    curl \
   && rm -rf /var/lib/apt/lists/* \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
