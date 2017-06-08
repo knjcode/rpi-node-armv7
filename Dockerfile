@@ -21,7 +21,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 8.0.0
+ENV NODE_VERSION 8.1.0
 ENV NODE_ARCH armv7l
 
 RUN buildDeps='xz-utils' \
@@ -39,7 +39,7 @@ RUN buildDeps='xz-utils' \
   && apt-get purge -y --auto-remove $buildDeps \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
-ENV YARN_VERSION 0.25.3
+ENV YARN_VERSION 0.26.1
 
 RUN set -ex \
   && for key in \
