@@ -21,7 +21,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 8.8.0
+ENV NODE_VERSION 8.8.1
 ENV NODE_ARCH armv7l
 
 RUN buildDeps='xz-utils' \
